@@ -476,21 +476,12 @@ jobs:
 
   build-ios-release:
     needs: build-engine-ios
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     defaults:
       run:
         shell: bash
 
     steps:
-
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-          remove-docker-images: 'true'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
@@ -521,7 +512,7 @@ jobs:
       - name: gclient sync macos
         run: |
           # Use custom gclient to trim size
-          cp engine/scripts/slim-mac-ios-build.gclient .gclient
+          cp engine/scripts/slim-mac.gclient .gclient
           gclient sync -D
 
       - name: build ios release
